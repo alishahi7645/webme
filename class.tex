@@ -1,0 +1,278 @@
+هدر
+
+header#header
+  div.container
+    nav.navbar
+      a.logo
+      ul.nav-links#navLinks
+      a.btn
+      button.mobile-menu-btn#menuBtn
+
+
+بخش هیرو
+section.hero#home
+  div.container
+    div.hero-grid
+      div.hero-content
+        h4
+        h1
+        span.highlight
+        h3.typing-effect
+        div.hero-stats
+          div.stat-item
+            span.stat-number
+            span.stat-label
+        form.newsletter-form
+          input[type="email"]
+          input[type="submit"]
+        div.hero-cta
+          a.btn.btn-outline
+          a.btn
+      div.hero-image
+        div.image-container
+          div.floating-element
+  a.scroll-indicator
+    div.mouse
+      div.wheel
+    span
+
+
+بخش درباره من
+section.about#about
+  div.container
+    div.about-content
+      div.about-img.floating
+        img
+      div.about-text
+        h2
+        span.highlight
+        h5
+        p
+        a.btn
+
+
+بخش خدمات
+section.services#services
+  div.container
+    div.section-title
+      h2
+      span.highlight
+      p
+    div.services-grid
+      div.service-card
+        div.service-icon
+          i
+        h5
+        p
+        a.btn.btn-outline
+
+
+بخش مهارت‌ها
+section.about#skills
+  div.container
+    div.section-title
+      h2
+      span.highlight
+      p
+    div.services-grid
+      div.service-card
+        h5
+        p
+
+
+بخش تماس
+section.contact#contact
+  div.container
+    h2
+    span.highlight
+    p
+    a.btn
+
+
+ فوتر
+footer
+  div.container
+    h2
+    span.highlight
+    p
+    div.social-links
+      a.social-link
+        i
+    div.copyright
+      p
+
+
+
+
+@import url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css");
+/* متغیرهای CSS برای یکپارچگی */
+:root {
+  --primary-color: #f9004d;
+  --primary-light: rgba(249, 0, 77, 0.1);
+  --secondary-color: #191919;
+  --dark-color: #101010;
+  --light-color: #ffffff;
+  --gray-color: #fcfcfc;
+  --transition: all 0.3s ease;
+  --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --border-radius: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+      
+      // انیمیشن تایپینگ
+      const texts = [
+        "توسعه‌دهنده فرانت‌اند",
+        "طراح رابط کاربری",
+        "متخصص React.js",
+        "فریلنسر خلاق",
+      ];
+      let count = 0;
+      let index = 0;
+      let currentText = "";
+      let letter = "";
+
+      function type() {
+        if (count === texts.length) {
+          count = 0;
+        }
+        currentText = texts[count];
+        letter = currentText.slice(0, ++index);
+
+        document.querySelector(".typing-effect").textContent = letter;
+
+        if (letter.length === currentText.length) {
+          count++;
+          index = 0;
+          setTimeout(type, 2000);
+        } else {
+          setTimeout(type, 100);
+        }
+      }
+
+      // شمارنده‌های متحرک
+      function animateCounters() {
+        const counters = document.querySelectorAll(".stat-number");
+        counters.forEach((counter) => {
+          const target = parseInt(counter.textContent);
+          let current = 0;
+          const increment = target / 100;
+
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              counter.textContent =
+                target + (counter.textContent.includes("+") ? "+" : "");
+              clearInterval(timer);
+            } else {
+              counter.textContent =
+                Math.floor(current) +
+                (counter.textContent.includes("+") ? "+" : "");
+            }
+          }, 20);
+        });
+      }
+
+      // فرم خبرنامه
+      document
+        .querySelector(".newsletter-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const email = this.querySelector('input[type="email"]').value;
+
+          // نمایش پیام موفقیت
+          const originalHTML = this.innerHTML;
+          this.innerHTML = `
+                <div style="text-align: center; padding: 20px; border-radius: 10px; background: rgba(76, 175, 80, 0.1);">
+                    <i class="ri-checkbox-circle-line" style="font-size: 3rem; color: #4CAF50;"></i>
+                    <h4 style="margin-top: 1rem; color: #fff;">پیام شما ارسال شد!</h4>
+                    <p>به زودی با شما تماس خواهیم گرفت.</p>
+                </div>
+            `;
+
+          // بازگرداندن فرم بعد از 3 ثانیه
+          setTimeout(() => {
+            this.innerHTML = originalHTML;
+            this.querySelector('input[type="email"]').value = "";
+          }, 3000);
+        });
+
+      // راه اندازی اولیه
+      document.addEventListener("DOMContentLoaded", () => {
+        // شروع انیمیشن تایپینگ
+        setTimeout(type, 1000);
+
+        // شروع شمارنده‌ها
+        setTimeout(animateCounters, 1500);
+
+        // افکت پارالاکس برای هیرو
+        window.addEventListener("scroll", () => {
+          const scrolled = window.pageYOffset;
+          const rate = scrolled * -0.5;
+          document.querySelector(
+            ".hero"
+          ).style.backgroundPosition = `right ${rate}px`;
+        });
+
+        // انیمیشن هنگام اسکرول به بخش‌ها
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "translateY(0)";
+            }
+          });
+        }, observerOptions);
+
+        // مشاهده عناصر برای انیمیشن
+        document
+          .querySelectorAll(".about-img, .about-text, .service-card")
+          .forEach((el) => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(20px)";
+            el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+            observer.observe(el);
+          });
+      });
+
+        if (window.innerWidth <= 992) {
+          heroGrid.style.gridTemplateColumns = "1fr";
+          heroGrid.style.gap = "3rem";
+
+          // تغییر ترتیب المان‌ها در موبایل
+          const heroContent = document.querySelector(".hero-content");
+          const heroImage = document.querySelector(".hero-image");
+
+          // در موبایل تصویر اول میاد
+          if (heroGrid.children.length > 0) {
+            heroGrid.innerHTML = "";
+            heroGrid.appendChild(heroImage);
+            heroGrid.appendChild(heroContent);
+          }
+        } else {
+          heroGrid.style.gridTemplateColumns = "1fr 1fr";
+          heroGrid.style.gap = "4rem";
+
+          // در دسکتاپ محتوا اول میاد
+          const heroContent = document.querySelector(".hero-content");
+          const heroImage = document.querySelector(".hero-image");
+
+          if (heroGrid.children.length > 0) {
+            heroGrid.innerHTML = "";
+            heroGrid.appendChild(heroContent);
+            heroGrid.appendChild(heroImage);
+          }
+        }

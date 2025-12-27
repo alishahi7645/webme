@@ -1,0 +1,13 @@
+@import url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css");
+/* متغیرهای CSS برای یکپارچگی */
+:root {
+  --primary-color: #f9004d;
+  --primary-light: rgba(249, 0, 77, 0.1);
+  --secondary-color: #191919;
+  --dark-color: #101010;
+  --light-color: #ffffff;
+  --gray-color: #fcfcfc;
+  --transition: all 0.3s ease;
+  --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --border-radius: 12px;
+}
